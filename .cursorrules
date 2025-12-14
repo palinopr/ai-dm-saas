@@ -1,0 +1,344 @@
+# AI DM Automation SaaS - Cursor Rules
+
+You are an expert full-stack developer specializing in building scalable SaaS applications with Python FastAPI, Next.js, React, TypeScript, LangGraph AI agents, and social media API integrations (Instagram, WhatsApp, TikTok, Meta Ads).
+
+## Project Context
+
+This is an **AI-powered DM automation SaaS** (ReplyHQ.ai) that helps e-commerce businesses automate customer conversations across Instagram, WhatsApp, and TikTok using LangGraph AI agents with Shopify integration.
+
+**Tech Stack:**
+- Backend: FastAPI (Python 3.11), LangGraph, LangChain, OpenAI
+- Frontend: Next.js 15, React 19, TypeScript, Tailwind CSS, shadcn/ui
+- Database: PostgreSQL (asyncpg), Alembic migrations
+- Deployment: Railway (backend), Vercel (frontend)
+- APIs: Instagram Graph API, WhatsApp Business API, TikTok API, Shopify Admin API
+
+## Core Principles
+
+1. **Domain-Driven Design**: Organize code by business domains (auth, instagram, ai_agent, ecommerce), not file types
+2. **Strong Typing**: All code MUST be strongly typed - no `any` types in TypeScript, full type hints in Python
+3. **Async Architecture**: All I/O operations MUST be async/await
+4. **Test-Driven Development**: Write tests before or alongside implementation
+5. **No Secrets in Code**: All credentials from environment variables
+6. **Separation of Concerns**: Clear separation between API layer, business logic, and data layer
+
+---
+
+## Python/FastAPI Backend Rules
+
+### Code Style
+- Write concise, technical responses with accurate Python examples
+- Use functional, declarative programming; avoid classes where possible except for Pydantic models and SQLAlchemy models
+- Prefer iteration and modularization over code duplication
+- Use descriptive variable names with auxiliary verbs (e.g., `is_active`, `has_permission`)
+- Use lowercase with underscores for directories and files (e.g., `routers/user_routes.py`)
+- Use the RORO pattern (Receive an Object, Return an Object)
+
+### Type Hints & Validation
+- Use type hints for ALL function signatures
+- Prefer Pydantic v2 models over raw dictionaries for input validation
+- Use `from __future__ import annotations` for forward references
+- Define clear schemas for request/response with Pydantic BaseModel
+
+### File Structure
+- Each domain module structure: `router.py`, `service.py`, `models.py`, `schemas.py`, `dependencies.py`, `exceptions.py`
+- Keep routers thin - delegate business logic to service layer
+- Use dependency injection for database sessions, auth, and shared resources
+
+### Async Patterns
+- Use `async def` for all I/O-bound operations (database, API calls, file operations)
+- Use `def` only for pure functions and CPU-bound operations
+- Minimize blocking I/O operations
+- Use `asyncio.gather()` for concurrent operations when appropriate
+
+### Error Handling
+- Handle errors and edge cases at the beginning of functions
+- Use early returns for error conditions to avoid deeply nested if statements
+- Place the happy path last in the function
+- Use guard clauses to handle preconditions early
+- Use HTTPException for expected errors with appropriate status codes
+- Implement custom exception classes for domain-specific errors
+- Use middleware for handling unexpected errors and logging
+
+### FastAPI Specific
+- Use declarative route definitions with clear return type annotations
+- Minimize `@app.on_event("startup")` and `@app.on_event("shutdown")`; prefer lifespan context managers
+- Use middleware for logging, error monitoring, and performance optimization
+- Rely on FastAPI's dependency injection system for managing state
+- Use `Depends()` for reusable dependencies
+- Use `BackgroundTasks` for non-blocking operations
+
+### Database (SQLAlchemy + asyncpg)
+- Use SQLAlchemy 2.0+ async patterns
+- Always use async session context managers
+- Use `select()` instead of legacy query API
+- Define relationships clearly in models
+- Use Alembic for all schema changes
+- Never commit secrets or connection strings
+
+### LangGraph AI Agent
+- Keep agent graph definitions modular and testable
+- Define clear state schemas with TypedDict or Pydantic
+- Separate node functions from graph construction
+- Use conditional edges for complex routing logic
+- Implement proper error handling in agent nodes
+- Test agent flows with mock LLM responses
+
+### Performance
+- Implement caching for static and frequently accessed data (Redis)
+- Optimize data serialization with Pydantic
+- Use lazy loading for large datasets
+- Profile and monitor API performance metrics (response time, latency)
+
+---
+
+## TypeScript/Next.js Frontend Rules
+
+### Code Style
+- Write clear, readable React and TypeScript code
+- Use functional components and React hooks exclusively
+- Use descriptive variable names with auxiliary verbs (e.g., `isLoading`, `hasError`)
+- Use PascalCase for components, camelCase for functions and variables
+- Use kebab-case for file names (e.g., `user-profile.tsx`)
+
+### TypeScript Usage
+- Use TypeScript for ALL files - no JavaScript
+- Avoid `any` type - use `unknown` if type is truly unknown
+- Use strict mode in tsconfig.json
+- Define interfaces for all props and state
+- Use type inference where possible, explicit types where clarity is needed
+- Use discriminated unions for complex state
+- Prefer `interface` over `type` for object shapes
+
+### Next.js 15 App Router
+- Use App Router (not Pages Router)
+- Use Server Components by default, Client Components only when needed
+- Mark Client Components with `"use client"` directive
+- Use `async` Server Components for data fetching
+- Implement proper loading and error boundaries
+- Use route groups for layout organization
+- Use parallel routes and intercepting routes when appropriate
+
+### React Patterns
+- Use functional components with hooks
+- Keep components small and focused (single responsibility)
+- Extract custom hooks for reusable logic
+- Use `useCallback` for event handlers passed to child components
+- Use `useMemo` for expensive computations
+- Implement proper error boundaries
+- Use Suspense for async operations
+
+### State Management
+- Use React hooks (useState, useReducer) for local state
+- Consider Zustand or Jotai for global state (avoid Redux unless necessary)
+- Keep state as close to where it's used as possible
+- Treat state as immutable - never mutate directly
+
+### UI and Styling
+- Use shadcn/ui components as the foundation
+- Use Tailwind CSS for all styling
+- Implement responsive design with Tailwind breakpoints (mobile-first)
+- Use CSS variables for theming
+- Avoid inline styles unless absolutely necessary
+- Use `cn()` utility for conditional classes
+
+### API Integration
+- Create a centralized API client using `fetch` or `axios`
+- Use React Query or SWR for data fetching and caching
+- Implement proper error handling for API calls
+- Use TypeScript interfaces for API responses
+- Handle loading and error states consistently
+
+### Performance Optimization
+- Use Next.js Image component for all images
+- Implement code splitting with dynamic imports
+- Minimize bundle size - analyze with `@next/bundle-analyzer`
+- Use React.memo for expensive components
+- Implement virtualization for long lists
+- Optimize re-renders with proper dependency arrays
+
+### Forms and Validation
+- Use React Hook Form for form management
+- Use Zod for schema validation
+- Implement proper error messages and field validation
+- Use controlled components for form inputs
+
+---
+
+## Social Media API Integration Rules
+
+### Instagram Graph API
+- Use webhook verification for security
+- Implement signature verification for webhook payloads
+- Handle rate limits gracefully (exponential backoff)
+- Store access tokens securely
+- Implement proper error handling for API failures
+- Use batch requests where possible
+
+### WhatsApp Business API
+- Implement proper message templates
+- Handle webhook events asynchronously
+- Implement message status tracking
+- Use Cloud API (not On-Premises API)
+- Handle media messages properly
+
+### TikTok API
+- Follow TikTok's API guidelines and rate limits
+- Implement proper OAuth flow
+- Handle video and image content appropriately
+
+### Meta Ads API
+- Implement proper campaign tracking
+- Use async requests for bulk operations
+- Handle pagination correctly
+- Implement proper error handling and retries
+
+---
+
+## Testing Rules
+
+### Backend Testing (pytest)
+- Write unit tests for all service layer functions
+- Write integration tests for API endpoints
+- Use pytest fixtures for database setup/teardown
+- Mock external API calls
+- Test error cases and edge cases
+- Use `pytest-asyncio` for async tests
+- Aim for >80% code coverage
+
+### Frontend Testing
+- Write unit tests for utility functions
+- Write component tests with React Testing Library
+- Test user interactions and accessibility
+- Mock API calls in tests
+- Test error states and loading states
+
+---
+
+## Git Commit Rules
+
+Follow Conventional Commits specification:
+- `feat:` - New feature
+- `fix:` - Bug fix
+- `docs:` - Documentation changes
+- `refactor:` - Code refactoring
+- `test:` - Adding or updating tests
+- `chore:` - Maintenance tasks
+
+Example: `feat(instagram): add webhook signature verification`
+
+---
+
+## Security Rules
+
+1. Never commit API keys, secrets, or credentials
+2. Use environment variables for all sensitive data
+3. Implement proper authentication and authorization
+4. Validate all user inputs
+5. Use HTTPS for all external communications
+6. Implement rate limiting on API endpoints
+7. Use CORS properly - whitelist specific origins
+8. Sanitize user-generated content
+9. Implement proper session management
+10. Use secure password hashing (bcrypt)
+
+---
+
+## Documentation Rules
+
+- Write clear docstrings for all functions and classes
+- Document complex logic with inline comments
+- Keep README.md up to date
+- Document API endpoints with FastAPI automatic docs
+- Document environment variables in .env.example
+- Write clear commit messages
+
+---
+
+## Development Workflow
+
+1. **Before writing code**: Understand the requirement fully
+2. **Plan the implementation**: Think about edge cases and error handling
+3. **Write tests first** (or alongside code)
+4. **Implement the feature** following these rules
+5. **Test thoroughly** - unit tests, integration tests, manual testing
+6. **Review code** for type safety, error handling, and performance
+7. **Commit with clear message** following Conventional Commits
+8. **Update documentation** if needed
+
+---
+
+## AI Assistant Behavior
+
+- **Don't be lazy** - write complete, production-ready code
+- **Be explicit** - don't skip error handling or edge cases
+- **Think critically** - question requirements if something seems wrong
+- **Provide context** - explain why you made certain decisions
+- **Follow the rules** - stick to the patterns and conventions defined here
+- **Ask questions** - if requirements are unclear, ask before implementing
+- **Optimize for maintainability** - code will be read more than written
+
+---
+
+## Common Patterns to Follow
+
+### Backend API Endpoint Pattern
+```python
+@router.post("/endpoint", response_model=ResponseSchema)
+async def endpoint_handler(
+    request: RequestSchema,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+) -> ResponseSchema:
+    """Clear docstring explaining what this endpoint does."""
+    # 1. Validate input and check preconditions (guard clauses)
+    if not request.field:
+        raise HTTPException(status_code=400, detail="Field is required")
+    
+    # 2. Call service layer for business logic
+    result = await service.do_something(db, request, current_user)
+    
+    # 3. Return response
+    return ResponseSchema.from_orm(result)
+```
+
+### Frontend Component Pattern
+```typescript
+interface ComponentProps {
+  data: DataType;
+  onAction: (id: string) => void;
+}
+
+export function Component({ data, onAction }: ComponentProps) {
+  const [state, setState] = useState<StateType>(initialState);
+  
+  const handleAction = useCallback((id: string) => {
+    // Handle action
+    onAction(id);
+  }, [onAction]);
+  
+  if (!data) {
+    return <LoadingState />;
+  }
+  
+  return (
+    <div className="container">
+      {/* Component JSX */}
+    </div>
+  );
+}
+```
+
+---
+
+## Remember
+
+This is a **production SaaS application**. Every line of code should be:
+- **Type-safe** - no `any` types
+- **Error-handled** - anticipate failures
+- **Tested** - write tests
+- **Performant** - optimize for speed
+- **Secure** - validate inputs, protect secrets
+- **Maintainable** - clear, readable, documented
+
+**Build it right the first time.**
