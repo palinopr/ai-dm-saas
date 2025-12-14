@@ -1,7 +1,7 @@
 """Create users table
 
 Revision ID: 001
-Revises: e8f4b3c5d2a1
+Revises:
 Create Date: 2024-01-01
 
 """
@@ -13,7 +13,7 @@ from sqlalchemy.dialects import postgresql
 
 # revision identifiers, used by Alembic.
 revision: str = '001'
-down_revision: Union[str, None] = 'e8f4b3c5d2a1'
+down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
 
