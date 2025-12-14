@@ -32,6 +32,11 @@ class Settings(BaseSettings):
     openai_temperature: float = 0.7
     openai_max_tokens: int = 500
 
+    # Shopify E-commerce Configuration
+    shopify_store_url: str = ""  # e.g., "mystore.myshopify.com"
+    shopify_api_key: str = ""  # Shopify API key
+    shopify_access_token: str = ""  # Admin API access token (shpat_xxx)
+
     class Config:
         env_file = ".env"
         case_sensitive = False

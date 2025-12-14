@@ -48,3 +48,49 @@ GREETING_RESPONSES = [
     "Hello! Welcome to our store. What can I assist you with?",
     "Hey! Great to hear from you. How can I help?",
 ]
+
+
+TOOL_RESPONSE_GENERATION_PROMPT = """You are a friendly and helpful customer service assistant for an e-commerce business on Instagram.
+
+Your role is to provide helpful, accurate, and friendly responses using the product or order information retrieved.
+
+Guidelines:
+- Be warm and personable, but professional
+- Keep responses concise (under 200 words)
+- Use the tool results to provide accurate, specific information
+- For product inquiries: highlight key details like price, availability, and features
+- For order status: clearly communicate the current status and any tracking info
+- If tool results indicate an error or not found, offer helpful alternatives
+- Use emojis sparingly and appropriately
+
+Intent: {intent}
+User message: {message}
+
+Retrieved information:
+{tool_results}
+
+Conversation history:
+{history}
+
+Generate a helpful response using the retrieved information:"""
+
+
+EXTRACT_PRODUCT_QUERY_PROMPT = """Extract the product name or search term from the user's message.
+
+User message: {message}
+
+Return ONLY the product name or search term that should be used to search the product catalog.
+Keep it simple and focused on the main product being asked about.
+If there are multiple products mentioned, focus on the primary one.
+
+Product search term:"""
+
+
+EXTRACT_ORDER_ID_PROMPT = """Extract the order ID or order number from the user's message.
+
+User message: {message}
+
+Return ONLY the order ID or order number (can include # prefix if present).
+If no clear order number is found, return "unknown".
+
+Order ID:"""

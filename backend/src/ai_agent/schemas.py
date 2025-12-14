@@ -40,6 +40,9 @@ class AgentState(TypedDict):
     # Generated response
     response: str | None
 
+    # Tool results storage (for e-commerce tools)
+    tool_results: list[str]
+
     # Error tracking
     error: str | None
 
