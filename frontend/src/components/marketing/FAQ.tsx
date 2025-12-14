@@ -1,10 +1,8 @@
+"use client";
+
+import { useState } from "react";
 import { ChevronDown } from "lucide-react";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
+import { Card, CardContent } from "@/components/ui/card";
 
 const faqs = [
   {
@@ -49,7 +47,39 @@ const faqs = [
   },
 ];
 
+function FAQItem({ question, answer, isOpen, onClick }: {
+  question: string;
+  answer: string;
+  isOpen: boolean;
+  onClick: () => void;
+}) {
+  return (
+    <Card className="mb-4">
+      <CardContent className="p-0">
+        <button
+          onClick={onClick}
+          className="flex w-full items-center justify-between p-6 text-left transition-colors hover:bg-muted/50"
+        >
+          <h3 className="text-lg font-semibold pr-4">{question}</h3>
+          <ChevronDown
+            className={`h-5 w-5 flex-shrink-0 text-muted-foreground transition-transform ${
+              isOpen ? "rotate-180" : ""
+            }`}
+          />
+        </button>
+        {isOpen && (
+          <div className="px-6 pb-6">
+            <p className="text-base text-muted-foreground">{answer}</p>
+          </div>
+        )}
+      </CardContent>
+    </Card>
+  );
+}
+
 export function FAQ() {
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+
   return (
     <>
       {/* FAQ Schema for SEO */}
@@ -83,19 +113,18 @@ export function FAQ() {
             </h2>
           </div>
 
-          {/* FAQ Accordion */}
-          <Accordion type="single" collapsible className="w-full">
+          {/* FAQ List */}
+          <div className="w-full">
             {faqs.map((faq, index) => (
-              <AccordionItem key={index} value={`item-${index}`}>
-                <AccordionTrigger className="text-left text-lg font-semibold">
-                  {faq.question}
-                </AccordionTrigger>
-                <AccordionContent className="text-base text-muted-foreground">
-                  {faq.answer}
-                </AccordionContent>
-              </AccordionItem>
+              <FAQItem
+                key={index}
+                question={faq.question}
+                answer={faq.answer}
+                isOpen={openIndex === index}
+                onClick={() => setOpenIndex(openIndex === index ? null : index)}
+              />
             ))}
-          </Accordion>
+          </div>
 
           {/* CTA */}
           <div className="mt-12 text-center">
