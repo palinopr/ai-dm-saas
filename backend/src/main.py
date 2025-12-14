@@ -56,6 +56,33 @@ async def health_check() -> dict[str, str]:
     return {"status": "healthy"}
 
 
+@app.get("/health/db")
+async def db_health_check() -> dict[str, str]:
+    """Database health check endpoint."""
+    from sqlalchemy import text
+    from src.database import async_session_maker
+
+    try:
+        async with async_session_maker() as session:
+            result = await session.execute(text("SELECT 1"))
+            result.scalar()
+
+            # Check if users table exists
+            table_check = await session.execute(
+                text("SELECT EXISTS (SELECT FROM information_schema.tables WHERE table_name = 'users')")
+            )
+            users_exists = table_check.scalar()
+
+            return {
+                "status": "healthy",
+                "database": "connected",
+                "users_table": "exists" if users_exists else "missing"
+            }
+    except Exception as e:
+        logger.error(f"Database health check failed: {e}")
+        return {"status": "unhealthy", "database": "error", "error": str(e)}
+
+
 @app.on_event("startup")
 async def startup_event() -> None:
     """Log when the application starts."""
