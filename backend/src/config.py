@@ -1,9 +1,19 @@
 """Application configuration."""
-from pydantic_settings import BaseSettings
+import json
+from typing import Any
+
+from pydantic import field_validator
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
     """Application settings loaded from environment variables."""
+
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        case_sensitive=False,
+        extra="ignore",
+    )
 
     # Database
     database_url: str = "postgresql+asyncpg://postgres:postgres@localhost:5432/ai_dm_automation"
@@ -13,7 +23,7 @@ class Settings(BaseSettings):
     algorithm: str = "HS256"
     access_token_expire_minutes: int = 30
 
-    # CORS
+    # CORS - accepts JSON string or comma-separated list
     cors_origins: list[str] = ["http://localhost:3000"]
 
     # Redis
@@ -37,9 +47,22 @@ class Settings(BaseSettings):
     shopify_api_key: str = ""  # Shopify API key
     shopify_access_token: str = ""  # Admin API access token (shpat_xxx)
 
-    class Config:
-        env_file = ".env"
-        case_sensitive = False
+    @field_validator("cors_origins", mode="before")
+    @classmethod
+    def parse_cors_origins(cls, v: Any) -> list[str]:
+        """Parse CORS origins from JSON string or comma-separated list."""
+        if isinstance(v, list):
+            return v
+        if isinstance(v, str):
+            # Try JSON first
+            if v.startswith("["):
+                try:
+                    return json.loads(v)
+                except json.JSONDecodeError:
+                    pass
+            # Fall back to comma-separated
+            return [origin.strip() for origin in v.split(",") if origin.strip()]
+        return ["http://localhost:3000"]
 
 
 settings = Settings()
