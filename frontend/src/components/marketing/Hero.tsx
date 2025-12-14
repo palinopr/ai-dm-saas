@@ -19,14 +19,15 @@ export function Hero() {
 
           {/* Headline */}
           <h1 className="max-w-4xl text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
-            Tired of losing sales in your{" "}
-            <span className="text-primary">DMs?</span>
+            Instagram & TikTok{" "}
+            <span className="text-primary">DM Automation</span>{" "}
+            That Turns Messages Into Sales
           </h1>
 
           {/* Subheadline */}
           <p className="mt-6 max-w-2xl text-lg text-muted-foreground md:text-xl">
-            Every missed DM is a lost customer. Stop letting revenue slip
-            through your fingers.
+            AI-powered customer service that responds to Instagram and TikTok DMs 24/7. 
+            Never miss a sale while you sleep. Integrates with Shopify for instant product answers.
           </p>
 
           {/* CTA */}
@@ -39,21 +40,16 @@ export function Hero() {
             </Link>
           </div>
 
-          {/* Hero Image Placeholder */}
+          {/* Hero Image */}
           <div className="mt-16 w-full max-w-4xl">
-            {/* PLACEHOLDER: Product Demo Animation - 600x400px */}
             <div className="relative aspect-[3/2] overflow-hidden rounded-xl border bg-gradient-to-br from-primary/20 via-primary/10 to-background shadow-2xl">
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="text-center">
-                  <div className="mb-4 text-6xl">📱</div>
-                  <p className="text-sm font-medium text-muted-foreground">
-                    Product Demo Animation
-                  </p>
-                  <p className="text-xs text-muted-foreground">
-                    Chaotic DM inbox → Organized automation
-                  </p>
-                </div>
-              </div>
+              <img
+                src="/images/hero-dashboard.png"
+                alt="AI-powered Instagram and TikTok DM automation dashboard showing manual messages vs AI-managed conversations with automated responses and Shopify integration"
+                className="h-full w-full object-cover"
+                loading="eager"
+                fetchPriority="high"
+              />
               {/* Decorative elements */}
               <div className="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-primary/20 blur-3xl" />
               <div className="absolute -bottom-4 -left-4 h-32 w-32 rounded-full bg-primary/10 blur-3xl" />

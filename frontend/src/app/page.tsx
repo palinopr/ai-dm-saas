@@ -6,6 +6,7 @@ import {
   Solution,
   SocialProof,
   Pricing,
+  FAQ,
   FinalCTA,
   Footer,
 } from "@/components/marketing";
@@ -54,6 +55,7 @@ export default function HomePage() {
           <Solution />
           <SocialProof />
           <Pricing />
+          <FAQ />
           <FinalCTA />
         </main>
         <Footer />

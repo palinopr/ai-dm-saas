@@ -10,11 +10,27 @@ export const metadata: Metadata = {
   },
   description: "AI-powered DM Automation SaaS for e-commerce businesses",
   keywords: [
+    // Primary keywords
     "Instagram DM automation",
     "TikTok DM bot",
     "AI sales assistant",
     "e-commerce automation",
     "Shopify Instagram integration",
+    // Secondary keywords
+    "Instagram automation for e-commerce",
+    "TikTok customer service automation",
+    "AI chatbot for Instagram",
+    "automated DM responses",
+    "Instagram business automation",
+    // Long-tail keywords (easier to rank)
+    "how to automate Instagram DMs for Shopify",
+    "best AI bot for Instagram business messages",
+    "TikTok DM automation for online stores",
+    "Instagram DM management tool for e-commerce",
+    "automated customer service for Instagram shop",
+    "AI assistant for Instagram direct messages",
+    "24/7 Instagram customer support automation",
+    "Shopify TikTok DM integration",
   ],
   authors: [{ name: "ReplyHQ Team" }],
   creator: "ReplyHQ",
@@ -63,10 +79,14 @@ export const viewport: Viewport = {
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.Node;
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        <link rel="apple-touch-icon" href="/images/og-image.png" />
+      </head>
       <body>
         <Providers>{children}</Providers>
       </body>
