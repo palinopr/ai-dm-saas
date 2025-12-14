@@ -1,4 +1,7 @@
 """Authentication router with API endpoints."""
+import logging
+import traceback
+
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -9,6 +12,7 @@ from src.auth.schemas import Token, UserRegister, UserResponse
 from src.database import get_db
 from src.models.user import User
 
+logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/auth", tags=["auth"])
 
 
@@ -18,15 +22,27 @@ async def register(
     db: AsyncSession = Depends(get_db),
 ) -> User:
     """Register a new user."""
-    existing_user = await auth_service.get_user_by_email(db, user_data.email)
-    if existing_user:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Email already registered",
-        )
+    try:
+        logger.info(f"Registration attempt for email: {user_data.email}")
+        existing_user = await auth_service.get_user_by_email(db, user_data.email)
+        if existing_user:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Email already registered",
+            )
 
-    user = await auth_service.create_user(db, user_data)
-    return user
+        user = await auth_service.create_user(db, user_data)
+        logger.info(f"User created successfully: {user.id}")
+        return user
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Registration failed: {e}")
+        logger.error(traceback.format_exc())
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Registration failed: {str(e)}",
+        )
 
 
 @router.post("/login", response_model=Token)
