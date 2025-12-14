@@ -10,17 +10,22 @@ from src.auth.schemas import TokenPayload, UserRegister
 from src.config import settings
 from src.models.user import User
 
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto", bcrypt__rounds=12)
+
+
+def _truncate_password(password: str) -> str:
+    """Truncate password to 72 bytes (bcrypt limit)."""
+    return password.encode('utf-8')[:72].decode('utf-8', errors='ignore')
 
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
     """Verify a plain password against a hashed password."""
-    return pwd_context.verify(plain_password, hashed_password)
+    return pwd_context.verify(_truncate_password(plain_password), hashed_password)
 
 
 def get_password_hash(password: str) -> str:
     """Hash a password using bcrypt."""
-    return pwd_context.hash(password)
+    return pwd_context.hash(_truncate_password(password))
 
 
 def create_access_token(subject: str, expires_delta: timedelta | None = None) -> str:
