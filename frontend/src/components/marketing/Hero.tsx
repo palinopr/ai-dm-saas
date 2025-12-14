@@ -2,6 +2,7 @@ import { ArrowRight, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
+import Image from "next/image";
 
 export function Hero() {
   return (
@@ -43,12 +44,13 @@ export function Hero() {
           {/* Hero Image */}
           <div className="mt-16 w-full max-w-4xl">
             <div className="relative aspect-[3/2] overflow-hidden rounded-xl border bg-gradient-to-br from-primary/20 via-primary/10 to-background shadow-2xl">
-              <img
+              <Image
                 src="/images/hero-dashboard.png"
                 alt="AI-powered Instagram and TikTok DM automation dashboard showing manual messages vs AI-managed conversations with automated responses and Shopify integration"
-                className="h-full w-full object-cover"
-                loading="eager"
-                fetchPriority="high"
+                fill
+                className="object-cover"
+                priority
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1200px"
               />
               {/* Decorative elements */}
               <div className="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-primary/20 blur-3xl" />

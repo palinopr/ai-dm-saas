@@ -5,5 +5,6 @@ export { Solution } from "./Solution";
 export { SocialProof } from "./SocialProof";
 export { Pricing } from "./Pricing";
 export { FAQ } from "./FAQ";
+export { FAQSchema } from "./FAQSchema";
 export { FinalCTA } from "./FinalCTA";
 export { Footer } from "./Footer";

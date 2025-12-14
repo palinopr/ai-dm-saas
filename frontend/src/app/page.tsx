@@ -1,16 +1,38 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
+import dynamic from "next/dynamic";
 import {
   Navigation,
   Hero,
-  Agitation,
-  Solution,
-  SocialProof,
-  Pricing,
-  FAQ,
-  FinalCTA,
   Footer,
 } from "@/components/marketing";
 import { JsonLd } from "@/components/seo";
+import { FAQSchema } from "@/components/marketing";
+
+// Lazy load below-the-fold components
+const Agitation = dynamic(() => import("@/components/marketing").then(mod => ({ default: mod.Agitation })), {
+  loading: () => <div className="h-96" />,
+});
+
+const Solution = dynamic(() => import("@/components/marketing").then(mod => ({ default: mod.Solution })), {
+  loading: () => <div className="h-96" />,
+});
+
+const SocialProof = dynamic(() => import("@/components/marketing").then(mod => ({ default: mod.SocialProof })), {
+  loading: () => <div className="h-96" />,
+});
+
+const Pricing = dynamic(() => import("@/components/marketing").then(mod => ({ default: mod.Pricing })), {
+  loading: () => <div className="h-96" />,
+});
+
+const FAQ = dynamic(() => import("@/components/marketing").then(mod => ({ default: mod.FAQ })), {
+  loading: () => <div className="h-96" />,
+});
+
+const FinalCTA = dynamic(() => import("@/components/marketing").then(mod => ({ default: mod.FinalCTA })), {
+  loading: () => <div className="h-96" />,
+});
 
 export const metadata: Metadata = {
   title: "AI DM Automation for Instagram & TikTok | Turn DMs Into Sales",
@@ -47,16 +69,29 @@ export default function HomePage() {
       <JsonLd type="organization" />
       <JsonLd type="softwareApplication" />
       <JsonLd type="offers" />
+      <FAQSchema />
       <div className="flex min-h-screen flex-col">
         <Navigation />
         <main className="flex-1">
           <Hero />
-          <Agitation />
-          <Solution />
-          <SocialProof />
-          <Pricing />
-          <FAQ />
-          <FinalCTA />
+          <Suspense fallback={<div className="h-96" />}>
+            <Agitation />
+          </Suspense>
+          <Suspense fallback={<div className="h-96" />}>
+            <Solution />
+          </Suspense>
+          <Suspense fallback={<div className="h-96" />}>
+            <SocialProof />
+          </Suspense>
+          <Suspense fallback={<div className="h-96" />}>
+            <Pricing />
+          </Suspense>
+          <Suspense fallback={<div className="h-96" />}>
+            <FAQ />
+          </Suspense>
+          <Suspense fallback={<div className="h-96" />}>
+            <FinalCTA />
+          </Suspense>
         </main>
         <Footer />
       </div>
