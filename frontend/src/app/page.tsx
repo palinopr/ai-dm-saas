@@ -1,10 +1,27 @@
-export default function Home() {
+import {
+  Navigation,
+  Hero,
+  Agitation,
+  Solution,
+  SocialProof,
+  Pricing,
+  FinalCTA,
+  Footer,
+} from "@/components/marketing";
+
+export default function HomePage() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24">
-      <h1 className="text-4xl font-bold">AI DM Automation</h1>
-      <p className="mt-4 text-lg text-gray-600">
-        Welcome to your AI-powered DM Automation SaaS
-      </p>
-    </main>
+    <div className="flex min-h-screen flex-col">
+      <Navigation />
+      <main className="flex-1">
+        <Hero />
+        <Agitation />
+        <Solution />
+        <SocialProof />
+        <Pricing />
+        <FinalCTA />
+      </main>
+      <Footer />
+    </div>
   );
 }

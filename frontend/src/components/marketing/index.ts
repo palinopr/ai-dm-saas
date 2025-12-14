@@ -1,0 +1,8 @@
+export { Navigation } from "./Navigation";
+export { Hero } from "./Hero";
+export { Agitation } from "./Agitation";
+export { Solution } from "./Solution";
+export { SocialProof } from "./SocialProof";
+export { Pricing } from "./Pricing";
+export { FinalCTA } from "./FinalCTA";
+export { Footer } from "./Footer";
