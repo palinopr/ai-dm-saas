@@ -4,6 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from src.auth.router import router as auth_router
 from src.config import settings
+from src.conversations.router import router as conversations_router
 from src.instagram.router import router as instagram_router
 
 app = FastAPI(
@@ -23,6 +24,7 @@ app.add_middleware(
 
 # Include routers
 app.include_router(auth_router)
+app.include_router(conversations_router)
 app.include_router(instagram_router)
 
 

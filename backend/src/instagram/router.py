@@ -2,7 +2,9 @@
 import logging
 
 from fastapi import APIRouter, Depends, HTTPException, Query, Response, status
+from sqlalchemy.ext.asyncio import AsyncSession
 
+from src.database import get_db
 from src.instagram import service as instagram_service
 from src.instagram.dependencies import verify_webhook_signature
 from src.instagram.exceptions import WebhookVerificationError
@@ -56,6 +58,7 @@ async def verify_webhook(
 async def receive_webhook(
     payload: InstagramWebhookPayload,
     _body: bytes = Depends(verify_webhook_signature),
+    db: AsyncSession = Depends(get_db),
 ) -> WebhookResponse:
     """
     Receive and process webhook events from Instagram.
@@ -67,6 +70,7 @@ async def receive_webhook(
     Args:
         payload: The parsed webhook payload
         _body: Raw request body (used for signature verification)
+        db: Database session for persisting messages
 
     Returns:
         Acknowledgment response
@@ -74,7 +78,7 @@ async def receive_webhook(
     logger.info(f"Received Instagram webhook event with {len(payload.entry)} entries")
 
     # Process the webhook event asynchronously
-    await instagram_service.process_webhook_event(payload)
+    await instagram_service.process_webhook_event(db, payload)
 
     # Always return OK to acknowledge receipt
     return WebhookResponse(status="ok")
