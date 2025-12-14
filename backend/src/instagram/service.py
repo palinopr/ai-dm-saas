@@ -3,7 +3,11 @@ import hashlib
 import hmac
 import logging
 
+from src.ai_agent import service as ai_agent_service
+from src.ai_agent.exceptions import AgentProcessingError
+from src.ai_agent.schemas import ProcessMessageRequest
 from src.config import settings
+from src.instagram.client import InstagramClient
 from src.instagram.exceptions import SignatureVerificationError, WebhookVerificationError
 from src.instagram.schemas import InstagramMessaging, InstagramWebhookPayload
 
@@ -101,8 +105,7 @@ async def process_webhook_event(payload: InstagramWebhookPayload) -> None:
     Process an incoming webhook event.
 
     This function handles the business logic for processing Instagram messages.
-    For now, it just logs the messages. In the future, this will integrate
-    with the AI agent for automated responses.
+    It sends messages through the AI agent and replies via the Instagram API.
 
     Args:
         payload: The parsed webhook payload
@@ -114,4 +117,41 @@ async def process_webhook_event(payload: InstagramWebhookPayload) -> None:
             logger.info(
                 f"Received message from {message.sender.id}: {message.message.text}"
             )
-            # TODO: Integrate with AI agent for automated responses
+
+            try:
+                # Process through AI agent
+                request = ProcessMessageRequest(
+                    sender_id=message.sender.id,
+                    recipient_id=message.recipient.id,
+                    message_text=message.message.text,
+                    message_id=message.message.mid,
+                )
+
+                response = await ai_agent_service.process_message(request)
+
+                # Send response back via Instagram
+                async with InstagramClient() as client:
+                    await client.send_message(
+                        recipient_id=message.sender.id,
+                        message_text=response.response_text,
+                    )
+
+                logger.info(
+                    f"Sent AI response to {message.sender.id} "
+                    f"(intent: {response.intent.value}, confidence: {response.confidence:.2f})"
+                )
+
+            except AgentProcessingError as e:
+                logger.error(f"AI agent error for message from {message.sender.id}: {e}")
+                # Send a fallback message
+                try:
+                    async with InstagramClient() as client:
+                        await client.send_message(
+                            recipient_id=message.sender.id,
+                            message_text="Thanks for your message! A team member will respond shortly.",
+                        )
+                except Exception as send_error:
+                    logger.error(f"Failed to send fallback message: {send_error}")
+
+            except Exception as e:
+                logger.error(f"Error processing message from {message.sender.id}: {e}")

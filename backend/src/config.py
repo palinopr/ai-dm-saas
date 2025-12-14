@@ -25,6 +25,13 @@ class Settings(BaseSettings):
     instagram_access_token: str = ""
     instagram_page_id: str = ""
 
+    # AI Agent / LLM Configuration
+    openai_api_key: str = ""
+    openai_api_base: str = "https://api.openai.com/v1"
+    openai_model: str = "gpt-4.1-mini"
+    openai_temperature: float = 0.7
+    openai_max_tokens: int = 500
+
     class Config:
         env_file = ".env"
         case_sensitive = False

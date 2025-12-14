@@ -4,6 +4,7 @@ from collections.abc import AsyncGenerator, Generator
 from typing import Any
 
 import pytest
+import pytest_asyncio
 from httpx import ASGITransport, AsyncClient
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 from sqlalchemy.pool import NullPool
@@ -23,7 +24,7 @@ def event_loop() -> Generator[asyncio.AbstractEventLoop, None, None]:
     loop.close()
 
 
-@pytest.fixture(scope="session")
+@pytest_asyncio.fixture(scope="session")
 async def test_engine() -> AsyncGenerator[Any, None]:
     """Create a test database engine."""
     engine = create_async_engine(
@@ -36,7 +37,7 @@ async def test_engine() -> AsyncGenerator[Any, None]:
     await engine.dispose()
 
 
-@pytest.fixture
+@pytest_asyncio.fixture
 async def db_session(test_engine: Any) -> AsyncGenerator[AsyncSession, None]:
     """Create a database session for tests."""
     async_session = async_sessionmaker(
@@ -49,7 +50,7 @@ async def db_session(test_engine: Any) -> AsyncGenerator[AsyncSession, None]:
         await session.rollback()
 
 
-@pytest.fixture
+@pytest_asyncio.fixture
 async def client(db_session: AsyncSession) -> AsyncGenerator[AsyncClient, None]:
     """Create a test client with database override."""
 
