@@ -1,0 +1,9 @@
+Implement a new feature end-to-end: $ARGUMENTS
+
+1.  **Analysis:** Use `Plan Mode` to analyze the codebase and create a detailed, step-by-step implementation plan. YOU MUST show me this plan for approval before writing any code.
+
+2.  **Backend:** Delegate to the `api-designer` and `db-migration` agents to create the necessary API endpoints and database changes, following the patterns in `backend/CLAUDE.md`.
+
+3.  **Frontend:** Create the required UI components and API integrations, following the patterns in `frontend/CLAUDE.md`.
+
+4.  **Validation:** Write comprehensive unit and integration tests for both frontend and backend. Delegate to the `security-reviewer` agent for a final check.

@@ -1,0 +1,7 @@
+Create a new backend API endpoint: $ARGUMENTS
+
+1. Add a new route handler in the appropriate domain directory within backend/src/routers/.
+2. Create Pydantic request and response models in the domain's schemas.py file.
+3. Add placeholder business logic in the domain's service.py file.
+4. Write a basic unit test for the new endpoint in the backend/tests/ directory.
+5. Ensure all code follows the patterns defined in backend/CLAUDE.md.

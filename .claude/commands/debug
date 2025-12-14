@@ -1,0 +1,5 @@
+Debug and fix an issue: $ARGUMENTS
+
+1. Root Cause Analysis: Analyze the error message, stack trace, and any provided context. Use Plan Mode to investigate the codebase and identify the fundamental root cause of the issue. Do not just treat the symptom.
+2. Propose a Fix: Based on your analysis, propose a fix that is safe, efficient, and has minimal side effects. Explain why your proposed fix is the correct one.
+3. Implement & Verify: Once I approve the fix, implement the code changes and, most importantly, write a new test case that would have caught this bug (a regression test).
