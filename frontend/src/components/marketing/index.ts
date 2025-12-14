@@ -1,7 +1,9 @@
 export { Navigation } from "./Navigation";
 export { Hero } from "./Hero";
+export { StatsBar } from "./StatsBar";
 export { Agitation } from "./Agitation";
 export { Solution } from "./Solution";
+export { FeatureTabs } from "./FeatureTabs";
 export { SocialProof } from "./SocialProof";
 export { Pricing } from "./Pricing";
 export { FAQ } from "./FAQ";

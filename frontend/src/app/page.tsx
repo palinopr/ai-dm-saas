@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import {
   Navigation,
   Hero,
+  StatsBar,
   Footer,
 } from "@/components/marketing";
 import { JsonLd } from "@/components/seo";
@@ -35,27 +36,27 @@ const FinalCTA = dynamic(() => import("@/components/marketing").then(mod => ({ d
 });
 
 export const metadata: Metadata = {
-  title: "AI DM Automation for Instagram & TikTok | Turn DMs Into Sales",
+  title: "ReplyHQ - AI Sales Team for Instagram & TikTok DMs | Turn DMs Into Sales",
   description:
-    "Never miss a sale again. Our AI responds to Instagram and TikTok DMs 24/7, answers product questions instantly, and turns conversations into revenue. Free 14-day trial.",
+    "Never miss a sale again. ReplyHQ's AI responds to Instagram and TikTok DMs 24/7, answers product questions instantly, and turns conversations into revenue. Free 14-day trial.",
   openGraph: {
-    title: "AI DM Automation for Instagram & TikTok | Turn DMs Into Sales",
+    title: "ReplyHQ - AI Sales Team for Instagram & TikTok DMs",
     description:
-      "Never miss a sale again. Our AI responds to Instagram and TikTok DMs 24/7, answers product questions instantly, and turns conversations into revenue.",
+      "Never miss a sale again. AI responds to Instagram and TikTok DMs 24/7, turning conversations into revenue while you sleep.",
     url: "https://replyhq.ai",
     images: [
       {
         url: "/images/og-image.png",
         width: 1200,
         height: 630,
-        alt: "ReplyHQ - Turn DMs Into Sales",
+        alt: "ReplyHQ - AI DM Automation for Instagram & TikTok",
       },
     ],
   },
   twitter: {
-    title: "AI DM Automation for Instagram & TikTok",
+    title: "ReplyHQ - AI Sales Team for Instagram & TikTok DMs",
     description:
-      "Never miss a sale again. Our AI responds to Instagram and TikTok DMs 24/7.",
+      "Never miss a sale again. AI responds to Instagram and TikTok DMs 24/7, turning conversations into revenue.",
     images: ["/images/og-image.png"],
   },
   alternates: {
@@ -74,6 +75,7 @@ export default function HomePage() {
         <Navigation />
         <main className="flex-1">
           <Hero />
+          <StatsBar />
           <Suspense fallback={<div className="h-96" />}>
             <Agitation />
           </Suspense>

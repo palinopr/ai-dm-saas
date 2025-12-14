@@ -1,14 +1,31 @@
 import type { Metadata, Viewport } from "next";
+import { Bricolage_Grotesque, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
+import { cn } from "@/lib/utils";
+
+const displayFont = Bricolage_Grotesque({
+  subsets: ["latin"],
+  variable: "--font-clash",
+  display: "swap",
+  weight: ["400", "500", "600", "700", "800"],
+});
+
+const bodyFont = Plus_Jakarta_Sans({
+  subsets: ["latin"],
+  variable: "--font-satoshi",
+  display: "swap",
+  weight: ["400", "500", "600", "700"],
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://replyhq.ai"),
   title: {
-    default: "ReplyHQ",
+    default: "ReplyHQ - AI Sales Team for Instagram & TikTok DMs",
     template: "%s | ReplyHQ",
   },
-  description: "AI-powered DM Automation SaaS for e-commerce businesses",
+  description:
+    "Never miss a DM again. ReplyHQ's AI responds to Instagram and TikTok messages 24/7, turning conversations into revenue while you sleep. Shopify integrated.",
   keywords: [
     // Primary keywords
     "Instagram DM automation",
@@ -51,12 +68,15 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "https://replyhq.ai",
     siteName: "ReplyHQ",
+    title: "ReplyHQ - AI Sales Team for Instagram & TikTok DMs",
+    description:
+      "Never miss a DM again. AI responds 24/7, turning conversations into revenue.",
     images: [
       {
         url: "/images/og-image.png",
         width: 1200,
         height: 630,
-        alt: "ReplyHQ - AI DM Automation",
+        alt: "ReplyHQ - AI DM Automation for Instagram & TikTok",
       },
     ],
   },
@@ -64,13 +84,17 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     site: "@replyhq",
     creator: "@replyhq",
+    title: "ReplyHQ - AI Sales Team for Instagram & TikTok DMs",
+    description:
+      "Never miss a DM again. AI responds 24/7, turning conversations into revenue.",
+    images: ["/images/og-image.png"],
   },
 };
 
 export const viewport: Viewport = {
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-    { media: "(prefers-color-scheme: dark)", color: "#000000" },
+    { media: "(prefers-color-scheme: dark)", color: "#0a0a0a" },
   ],
   width: "device-width",
   initialScale: 1,
@@ -82,12 +106,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <link rel="apple-touch-icon" href="/images/og-image.png" />
       </head>
-      <body>
+      <body
+        className={cn(
+          displayFont.variable,
+          bodyFont.variable,
+          "font-body antialiased"
+        )}
+      >
         <Providers>{children}</Providers>
       </body>
     </html>
