@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/palinopr/ai-dm-saas/compare/v1.0.0...v1.0.1) (2025-12-18)
+
+
+### Bug Fixes
+
+* make stripe env variables optional ([b7449c4](https://github.com/palinopr/ai-dm-saas/commit/b7449c4a0723ab7c1eb207324c44583999549ffa))
+
 # 1.0.0 (2025-12-18)
 
 
