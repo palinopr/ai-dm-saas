@@ -1,3 +1,10 @@
+# 1.0.0 (2025-12-18)
+
+
+### Features
+
+* saas boilerplate with supabase auth ([db7f22b](https://github.com/palinopr/ai-dm-saas/commit/db7f22b320bdc882375a716ca8ec6e14e6d2ce1f))
+
 ## [1.7.7](https://github.com/ixartz/SaaS-Boilerplate/compare/v1.7.6...v1.7.7) (2025-12-12)
 
 
